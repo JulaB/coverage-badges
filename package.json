@@ -1,0 +1,49 @@
+{
+  "name": "coverage-badges",
+  "version": "1.0.0",
+  "description": "Create coverage badges from different coverage reports",
+  "author": "Julia Bazhukhina",
+  "license": "MIT",
+  "bin": "index.js",
+  "homepage": "https://github.com/JulaB/coverage-badges",
+  "bugs": "https://github.com/JulaB/coverage-badges/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JulaB/coverage-badges"
+  },
+  "scripts": {
+    "lint-staged": "$(yarn bin)/lint-staged",
+    "test": "$(yarn bin)/jest"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint",
+      "git add"
+    ]
+  },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/coverage/"
+    ],
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "json-summary"
+    ]
+  },
+  "pre-commit": [
+    "lint-staged"
+  ],
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.7.1",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.4.1",
+    "jest": "^24.7.1",
+    "lint-staged": "^8.1.5",
+    "pre-commit": "^1.2.2"
+  }
+}
