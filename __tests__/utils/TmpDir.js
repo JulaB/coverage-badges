@@ -15,7 +15,7 @@ class TmpDir {
 
   create() {
     if (!existsSync(this.dirName)) {
-      mkdirSync(this.dirName);
+      mkdirSync(this.dirName, { recursive: true });
     }
   }
 

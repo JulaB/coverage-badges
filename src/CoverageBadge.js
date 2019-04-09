@@ -25,7 +25,7 @@ class CoverageBadge {
       .then(() => this.mkOutputDir())
       .then(() => this.downloadBadge())
       .then(() => this.printMessage())
-      .catch(err => console.error(err));
+      .catch(err => Promise.reject(err));
   }
 
   mkOutputDir() {
@@ -44,6 +44,15 @@ class CoverageBadge {
       const destination = this.badge.filePath;
       const file = createWriteStream(destination);
       get(this.badge.url, (res) => {
+        if (res.statusCode !== 200) {
+          unlink(destination, (err) => {
+            if (err) {
+              reject(err);
+            }
+          });
+          reject(new Error('Cannot download the coverage badge.'));
+        }
+
         res.pipe(file);
         file.on('finish', () => {
           file.close(() => {
@@ -51,7 +60,11 @@ class CoverageBadge {
           });
         });
       }).on('error', (err) => {
-        unlink(destination);
+        unlink(destination, (exp) => {
+          if (exp) {
+            reject(exp);
+          }
+        });
         reject(err);
       });
     });
@@ -73,8 +86,11 @@ class CoverageBadge {
   }
 
   printMessage() {
-    console.log(`${this.badge.label} badge was created.
-    You can add '![${this.badge.label}](${this.badge.filePath})' to README.md`);
+    const messages = [
+      `${this.badge.label} badge was created.`,
+      `You can add '![${this.badge.label}](${this.badge.filePath})' to README.md`,
+    ];
+    console.log(messages.join('\n'));
   }
 
   createBadge(total) {

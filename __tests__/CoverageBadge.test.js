@@ -1,14 +1,11 @@
 const nock = require('nock');
-const { resolve, join } = require('path');
 const { existsSync, lstatSync } = require('fs');
-const CoverageBadge = require('../src/CoverageBadge');
 const TmpDir = require('./utils/TmpDir');
+const coverageBadge = require('./utils/coverageBadge');
+
+const tmpDir = new TmpDir('./tmp');
 
 describe('Coverage Badge', () => {
-  const tmpDirPath = './tmp';
-  const tmpDir = new TmpDir(tmpDirPath);
-  const mockDir = resolve('./__tests__/__mocks__');
-
   beforeEach(() => {
     tmpDir.create();
     console.log = jest.fn();
@@ -20,22 +17,29 @@ describe('Coverage Badge', () => {
   });
 
   it('creates the badge successfully', () => {
-    const options = {
-      label: 'Coverage',
-      source: join(mockDir, 'coverage_report.json'),
-      attribute: 'total.statements.pct',
-      outputDir: `${tmpDirPath}/badges`,
-    };
-    const coverage = new CoverageBadge(options);
-
-
     expect.assertions(2);
     nock('https://img.shields.io/badge')
       .get('/Coverage-69.14%25-red.svg?style=flat')
       .reply(200, 'test content');
-    return coverage.make().then(() => {
-      expect(existsSync(`${tmpDirPath}/badges/coverage.svg`)).toBe(true);
-      expect(lstatSync(`${tmpDirPath}/badges/coverage.svg`).size).toBeGreaterThan(0);
+
+    return coverageBadge().make().then(() => {
+      const path = './tmp/badges/coverage.svg';
+      expect(existsSync(path)).toBe(true);
+      expect(lstatSync(path).size).toBeGreaterThan(0);
+    });
+  });
+
+  it('saves the badge to existing directory', () => {
+    new TmpDir('./tmp/badges').create();
+    expect.assertions(2);
+    nock('https://img.shields.io/badge')
+      .get('/Coverage-69.14%25-red.svg?style=flat')
+      .reply(200, 'test content');
+
+    return coverageBadge().make().then(() => {
+      const path = './tmp/badges/coverage.svg';
+      expect(existsSync(path)).toBe(true);
+      expect(lstatSync(path).size).toBeGreaterThan(0);
     });
   });
 });
