@@ -13,19 +13,22 @@ class CoverageBadge {
   }
 
   make() {
-    return new Promise((resolve, reject) => {
-      readFile(this.options.source, 'utf-8', (err, data) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(data);
-      });
-    }).then(data => this.fetchCoverageFrom(data))
+    return new Promise((resolve, reject) => this.readSourceFile(resolve, reject))
+      .then(data => this.fetchCoverageFrom(data))
       .then(total => this.createBadge(total))
       .then(() => this.mkOutputDir())
       .then(() => this.downloadBadge())
       .then(() => this.printMessage())
       .catch(err => Promise.reject(err));
+  }
+
+  readSourceFile(resolve, reject) {
+    readFile(this.options.source, 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(data);
+    });
   }
 
   mkOutputDir() {
@@ -45,11 +48,7 @@ class CoverageBadge {
       const file = createWriteStream(destination);
       get(this.badge.url, (res) => {
         if (res.statusCode !== 200) {
-          unlink(destination, (err) => {
-            if (err) {
-              reject(err);
-            }
-          });
+          this.constructor.unlinkFile(destination, reject);
           reject(new Error('Cannot download the coverage badge.'));
         }
 
@@ -60,11 +59,7 @@ class CoverageBadge {
           });
         });
       }).on('error', (err) => {
-        unlink(destination, (exp) => {
-          if (exp) {
-            reject(exp);
-          }
-        });
+        this.constructor.unlinkFile(destination, reject);
         reject(err);
       });
     });
@@ -100,6 +95,14 @@ class CoverageBadge {
   getAttribute(obj) {
     const paths = this.options.attribute.split('.');
     return paths.reduce((value, path) => (value && value[path]), obj);
+  }
+
+  static unlinkFile(path, reject) {
+    unlink(path, (err) => {
+      if (err) {
+        reject(err);
+      }
+    });
   }
 }
 
