@@ -6,6 +6,7 @@ const {
 } = require('fs');
 const { get } = require('https');
 const Badge = require('./Badge');
+const Color = require('./Color');
 
 class CoverageBadge {
   constructor(options) {
@@ -83,7 +84,7 @@ class CoverageBadge {
   printMessage() {
     const messages = [
       `${this.badge.label} badge was created.`,
-      `You can add '![${this.badge.label}](${this.badge.filePath})' to README.md`,
+      `You can add '${Color.green(this.badge.markup)}' to README.md`,
     ];
     console.log(messages.join('\n'));
   }

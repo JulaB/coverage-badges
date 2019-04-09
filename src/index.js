@@ -1,6 +1,7 @@
 const { readFile } = require('fs');
 const CoverageBadge = require('./CoverageBadge');
 const Options = require('./Options');
+const Color = require('./Color');
 
 const loadConfig = path => (
   new Promise((resolve, reject) => {
@@ -21,11 +22,15 @@ const loadConfig = path => (
   })
 );
 
-loadConfig('.coveragebadgesrc')
-  .then(configs => (
-    Promise.all(
-      configs.map(config => new CoverageBadge(new Options(config)).make()),
-    )
-  ))
-  .then(() => console.log('Done.'))
-  .catch(err => console.error(err));
+const makeBadges = configPath => (
+  loadConfig(configPath)
+    .then(configs => (
+      Promise.all(
+        configs.map(config => new CoverageBadge(new Options(config)).make()),
+      )
+    ))
+    .then(() => console.log('Done.'))
+    .catch(err => console.error(Color.red(err)))
+);
+
+module.exports = makeBadges;

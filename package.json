@@ -5,7 +5,8 @@
   "author": "Julia Bazhukhina",
   "license": "MIT",
   "bin": "index.js",
-  "homepage": "https://github.com/JulaB/coverage-badges",
+  "files": ["index.js", "/src"],
+  "homepage": "https://github.com/JulaB/coverage-badges#readme",
   "bugs": "https://github.com/JulaB/coverage-badges/issues",
   "repository": {
     "type": "git",
@@ -13,7 +14,11 @@
   },
   "scripts": {
     "lint-staged": "$(yarn bin)/lint-staged",
-    "test": "$(yarn bin)/jest"
+    "test": "$(yarn bin)/jest",
+
+    "premake-badge": "yarn test --coverage",
+    "make-badge": "node index.js",
+    "postmake-badge": "git add badges/coverage.svg"
   },
   "lint-staged": {
     "*.js": [
@@ -44,7 +49,8 @@
     ]
   },
   "pre-commit": [
-    "lint-staged"
+    "lint-staged",
+    "make-badge"
   ],
   "devDependencies": {
     "babel-eslint": "^10.0.1",

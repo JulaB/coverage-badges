@@ -18,6 +18,10 @@ class Badge {
     return this.options.label;
   }
 
+  get markup() {
+    return `![${this.label}](${this.filePath})`;
+  }
+
   get filePath() {
     const fileSafeName = this.options.label.toLowerCase().replace(/\W/g, '_');
     return `${this.options.outputDir}/${fileSafeName}.svg`;

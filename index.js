@@ -1,1 +1,3 @@
-#!/usr/local/bin/node
+#!/usr/bin/env node
+
+require('./src')('.coveragebadgesrc');

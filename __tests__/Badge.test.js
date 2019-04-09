@@ -27,6 +27,8 @@ describe('Badge', () => {
   describe('badge getters', () => {
     let badge;
     const label = 'Coverage-1 with ☀"symbols"♥ *&/ ';
+    const filePath = './some-dir/coverage_1_with___symbols_______.svg';
+
     beforeAll(() => {
       badge = new Badge(99.56, {
         label,
@@ -39,7 +41,12 @@ describe('Badge', () => {
     });
 
     it('returns the badge safe file path', () => {
-      expect(badge.filePath).toEqual('./some-dir/coverage_1_with___symbols_______.svg');
+      expect(badge.filePath).toEqual(filePath);
+    });
+
+    it('returns the badge markup', () => {
+      const expectedMarkup = `![${label}](${filePath})`;
+      expect(badge.markup).toEqual(expectedMarkup);
     });
 
     it('returns the correct img.shields.io url for badge', () => {
