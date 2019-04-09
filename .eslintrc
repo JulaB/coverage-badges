@@ -6,8 +6,8 @@
     "jest/globals": true,
     "es6": true
   },
-
   "rules": {
+    "no-console": "off",
     "jest/no-disabled-tests": "warn",
     "jest/no-focused-tests": "error",
     "jest/no-identical-title": "error",

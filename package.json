@@ -22,14 +22,25 @@
     ]
   },
   "jest": {
+    "collectCoverageFrom": [
+      "**/*.js"
+    ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
-      "/coverage/"
+      "/coverage/",
+      "/utils/"
     ],
     "coverageReporters": [
       "text",
       "lcov",
       "json-summary"
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    },
+    "testPathIgnorePatterns": [
+      "<rootDir>/__tests__/utils/",
+      "<rootDir>/__tests__/__mocks__/"
     ]
   },
   "pre-commit": [
@@ -44,6 +55,10 @@
     "eslint-plugin-jest": "^22.4.1",
     "jest": "^24.7.1",
     "lint-staged": "^8.1.5",
+    "nock": "^10.0.6",
     "pre-commit": "^1.2.2"
+  },
+  "engines": {
+    "node": ">=10"
   }
 }
