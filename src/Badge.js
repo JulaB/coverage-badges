@@ -11,7 +11,7 @@ class Badge {
     if (this.coverage < 90) {
       return 'yellow';
     }
-    return 'brightgreen';
+    return 'green';
   }
 
   get label() {

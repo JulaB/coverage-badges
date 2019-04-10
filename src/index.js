@@ -7,16 +7,16 @@ const loadConfig = path => (
   new Promise((resolve, reject) => {
     readFile(path, 'utf-8', (err, data) => {
       if (err) {
-        return reject(err);
+        reject(err);
       }
       try {
         let obj = JSON.parse(data);
         if (!Array.isArray(obj)) {
           obj = [obj];
         }
-        return resolve(obj);
+        resolve(obj);
       } catch (exp) {
-        return reject(exp);
+        reject(exp);
       }
     });
   })
@@ -30,7 +30,10 @@ const makeBadges = configPath => (
       )
     ))
     .then(() => console.log('Done.'))
-    .catch(err => console.error(Color.red(err)))
+    .catch((err) => {
+      console.error(Color.red(err));
+      return err;
+    })
 );
 
 module.exports = makeBadges;

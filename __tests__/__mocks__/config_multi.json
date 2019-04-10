@@ -1,0 +1,12 @@
+[
+  {
+    "source": "./coverage/coverage-summary.json",
+    "attribute": "total.statements.pct"
+  },
+  {
+    "label": "Ruby coverage",
+    "source": "./coverage/.last_run.json",
+    "attribute": "result.covered_percent",
+    "outputDir": "./badges"
+  }
+]
