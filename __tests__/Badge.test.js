@@ -17,10 +17,10 @@ describe('Badge', () => {
 
     it('returns light green color for badge coverage >= 90', () => {
       let badge = new Badge(100, {});
-      expect(badge.color).toEqual('green');
+      expect(badge.color).toEqual('brightgreen');
 
       badge = new Badge(90, {});
-      expect(badge.color).toEqual('green');
+      expect(badge.color).toEqual('brightgreen');
     });
   });
 
@@ -50,7 +50,7 @@ describe('Badge', () => {
     });
 
     it('returns the correct img.shields.io url for badge', () => {
-      const expectedParams = `${encodeURIComponent(label)}-99.56%25-green`;
+      const expectedParams = `${encodeURIComponent(label)}-99.56%25-brightgreen`;
       expect(badge.url).toEqual(`https://img.shields.io/badge/${expectedParams}.svg?style=flat`);
     });
   });
