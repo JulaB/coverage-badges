@@ -1,10 +1,10 @@
-# Coverage Badges &nbsp;&nbsp;&nbsp;&nbsp; [![Codeship Status for JulaB/coverage-badges](https://app.codeship.com/projects/47896600-3c8e-0137-3504-0a50e0cdf939/status?branch=master)](https://app.codeship.com/projects/334699) ![Coverage](./badges/coverage.svg)
+# Coverage Badges &nbsp;&nbsp;&nbsp;&nbsp; [![Codeship Status for JulaB/coverage-badges](https://app.codeship.com/projects/47896600-3c8e-0137-3504-0a50e0cdf939/status?branch=master)](https://app.codeship.com/projects/334699)
 
 Create coverage badges from different coverage reports.
 
 Coverage badge examples:
 
-![Coverage](./badges_examples/coverage.svg) ![Ruby coverage](./badges_examples/ruby_coverage.svg) ![JS coverage](./badges_examples/js_coverage.svg)
+![Coverage](https://img.shields.io/badge/coverage-98.23%25-brightgreen.svg) ![Ruby coverage](https://img.shields.io/badge/Ruby%20coverage-86.33%25-yellow.svg) ![JS coverage](https://img.shields.io/badge/JS%20coverage-76.33%25-red.svg)
 
 ## Installation
 ```
