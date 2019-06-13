@@ -2,6 +2,10 @@
   "name": "coverage-badges",
   "version": "1.0.1",
   "description": "Create coverage badges from different coverage reports",
+  "keywords": [
+    "coverage",
+    "badges"
+  ],
   "author": "Julia Bazhukhina",
   "license": "MIT",
   "bin": "index.js",
