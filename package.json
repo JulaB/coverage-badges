@@ -1,6 +1,6 @@
 {
   "name": "coverage-badges",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Create coverage badges from different coverage reports",
   "keywords": [
     "coverage",
